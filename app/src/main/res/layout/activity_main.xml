@@ -39,7 +39,10 @@
         android:src="@drawable/round_camera_24"
         android:scaleType="centerCrop"
         android:background="?attr/selectableItemBackgroundBorderless"
-        app:tint="#fff" />
+        app:tint="#fff"
+        android:focusableInTouchMode="true">
+        <requestFocus />
+    </ImageButton>
 
     <ImageButton
         android:layout_width="40sp"

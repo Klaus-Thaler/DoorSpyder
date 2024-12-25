@@ -24,7 +24,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
-import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -91,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         setTurnScreenOn(true);
         previewView = findViewById(R.id.cameraPreview);
         capture = findViewById(R.id.capture);
+        capture.requestFocusFromTouch();
         toggleFolder = findViewById(R.id.toggleFolder);
 
         if (ContextCompat.checkSelfPermission(MainActivity.this,
@@ -115,11 +115,14 @@ public class MainActivity extends AppCompatActivity {
                         .setTargetRotation(getWindowManager().getDefaultDisplay().getRotation()).build();
                 CameraSelector cameraSelector = new CameraSelector.Builder()
                         .requireLensFacing(cameraFacing).build();
+
                 cameraProvider.unbindAll();
                 camera = cameraProvider.bindToLifecycle(this, cameraSelector, preview, imageCapture);
 
                 CameraControl cameraParameters = camera.getCameraControl();
                 cameraParameters.setLinearZoom(cameraZoom);
+
+                onWindowFocusChanged(true);
 
                 capture.setOnClickListener(new View.OnClickListener() {
                     @Override
